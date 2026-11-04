@@ -2,6 +2,8 @@
 
 A documentation website for WoW Forever Guides, built with [Docusaurus](https://docusaurus.io/) and TypeScript.
 
+Visit the public website at [forever-crawlers.github.io/wow-forever-guides](https://forever-crawlers.github.io/wow-forever-guides/).
+
 ## Requirements
 
 - Node.js 20 or newer
@@ -34,3 +36,7 @@ This generates static content in the `build` directory, ready for deployment to 
 ```bash
 npm run typecheck
 ```
+
+## Deployment
+
+Pushes to `main` automatically build and deploy the website to GitHub Pages using the workflow in `.github/workflows/deploy.yml`. You can also run the workflow manually from the repository's Actions tab.
