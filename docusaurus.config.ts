@@ -42,6 +42,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
+          exclude: ['superpowers/**'],
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
@@ -87,7 +88,7 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Guides',
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
