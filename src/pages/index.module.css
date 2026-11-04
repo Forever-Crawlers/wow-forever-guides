@@ -1,23 +1,68 @@
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
-
 .heroBanner {
-  padding: 4rem 0;
-  text-align: center;
   position: relative;
   overflow: hidden;
+  padding: 4.5rem 0;
+  text-align: center;
+  color: #f4ecdc;
+  background:
+    radial-gradient(circle at 50% 0, rgba(183, 45, 45, 0.5), transparent 55%),
+    linear-gradient(145deg, #24181c, #121315 70%);
+  border-bottom: 2px solid #b72d2d;
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+.heroLogo {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 1rem;
+  border: 2px solid #ffd783;
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+}
+
+.eyebrow {
+  margin-bottom: 0.5rem;
+  color: #ffd783;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  margin-bottom: 0.75rem;
+  color: #ffd783;
+  font-size: clamp(2.5rem, 7vw, 4.75rem);
+  line-height: 1;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+}
+
+.heroSubtitle {
+  max-width: 620px;
+  margin: 0 auto 1.5rem;
+  color: #f4ecdc;
+  font-size: 1.2rem;
 }
 
 .buttons {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.heroButton,
+.heroButton:hover {
+  background: #d8483e;
+  color: #fff8e7;
+  border-color: #f2bb66;
+  text-transform: uppercase;
+}
+
+.heroButton:hover {
+  background: #b72d2d;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 3rem 1.5rem;
+  }
 }

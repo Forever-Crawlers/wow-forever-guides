@@ -19,5 +19,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Local worktrees
+# Local worktrees and agent scratch files
 .worktrees/
+.superpowers/

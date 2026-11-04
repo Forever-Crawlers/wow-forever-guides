@@ -6,8 +6,8 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'WoW Forever Guides',
-  tagline: 'Guides for your WoW adventures',
-  favicon: 'img/favicon.ico',
+  tagline: 'Horde strength. Crawler chaos. Practical guides.',
+  favicon: 'img/forever-crawlers.webp',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -73,13 +73,14 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     colorMode: {
+      defaultMode: 'dark',
       respectPrefersColorScheme: true,
     },
     navbar: {
       title: 'WoW Forever Guides',
       logo: {
-        alt: 'WoW Forever Guides Logo',
-        src: 'img/logo.svg',
+        alt: 'Forever Crawlers logo',
+        src: 'img/forever-crawlers.webp',
       },
       items: [
         {
