@@ -17,6 +17,8 @@
   --ifm-border-color: #cbbda2;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(142, 32, 39, 0.1);
+  --torchlit-primary-hover: #701a20;
+  --torchlit-focus: #8e2027;
 }
 
 [data-theme='dark'] {
@@ -36,6 +38,8 @@
   --ifm-footer-link-color: #e9c57d;
   --ifm-border-color: #55443f;
   --docusaurus-highlighted-code-line-bg: rgba(216, 72, 62, 0.25);
+  --torchlit-primary-hover: #b72d2d;
+  --torchlit-focus: #ffd783;
 }
 
 .navbar {
@@ -66,7 +70,7 @@
 }
 
 .button--primary:hover {
-  background: var(--ifm-color-primary);
+  background: var(--torchlit-primary-hover);
   color: #fff8e7;
 }
 
@@ -75,7 +79,7 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 3px solid #d69f45;
+  outline: 3px solid var(--torchlit-focus);
   outline-offset: 3px;
 }
 
