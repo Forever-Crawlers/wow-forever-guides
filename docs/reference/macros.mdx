@@ -1,0 +1,115 @@
+---
+sidebar_position: 2
+---
+
+# Macros
+
+Macros combine slash commands into single buttons. This page covers how the classic-style macro system works in Forever, with worked examples drawn from real leveling questions.
+
+## Creating a Macro
+
+1. Press **Esc → Macros**, or type `/macro`.
+2. Choose **New**, name it, and pick an icon — or leave the **question mark** so the icon follows the current spell.
+3. Type the commands in the big box, one command per line.
+4. Drag the macro from the window onto the action bar like a spell.
+
+Each character has 18 macro slots, plus 18 shared across all characters on the account.
+
+## The Core Rules
+
+These rules explain almost every macro failure:
+
+1. **One press, one action.** Macro lines run top to bottom and stop at the first spell that succeeds. A macro with three `/cast` lines casts only the first one that works — every press.
+2. **Conditions go in square brackets.** `/cast [nocombat] Aspect of the Cheetah` — common conditions: `[combat]`, `[nocombat]`, `[nopet]`, `[@pet,dead]`, `[nochanneling]`, `[@pet]`.
+3. **No waits, no cooldown checks, no debuff tracking.** There is no `/wait`, no delay, no "press again when ready" logic, and no way to test whether a debuff is already on the target. Blizzard removed that functionality years ago; Forever uses the same rules.
+
+:::note Debugging rule
+If a macro does nothing, the first line usually failed and the rest still ran. Check the condition or target on line one.
+:::
+
+## castsequence: The One "Loop"
+
+`/castsequence` steps through a list of spells, one entry per press, advancing only when a spell actually casts.
+
+```
+/castsequence reset=target/6 Charge, Rend, Thunder Clap, Heroic Strike
+```
+
+- Press 1 casts Charge, press 2 casts Rend, and so on through the list.
+- After the last entry, the sequence **loops back to the first** — castsequence is a circle, not a line.
+- **Reset conditions** (`reset=target/6`) restart the sequence early:
+  - `target` — switching to a different enemy.
+  - `6` — six seconds pass without pressing the button.
+  - `combat` — combat ends.
+- If the current step cannot cast (out of Rage, on cooldown), the button does nothing and **waits on that step** — castsequence never skips.
+
+:::warning Cooldowns jam castsequence
+A step on cooldown stalls the button every cycle. Spells with their own timers (Thunder Clap, Mortal Strike, Sweeping Strikes) belong on their own keys, not inside a spam sequence.
+:::
+
+## Worked Examples
+
+### Hunter: opener (pet attack + mark)
+
+```
+/petattack
+/cast Hunter's Mark
+```
+
+Opens every fight: the pet charges and the mark lands in one press.
+
+### Hunter: feed pet, one press
+
+```
+/cast [@pet] Feed Pet
+/use Tough Jerky
+```
+
+`[@pet]` aims the spell at the pet without changing target, and the second line picks the named food automatically. Replace `Tough Jerky` with the exact name from the food's tooltip.
+
+:::danger Never use `/use 0 1` for feeding
+`/use 0 1` means "use whatever sits in the first backpack slot." If a weapon or fishing pole occupies that slot, the macro **equips it** instead of feeding. Always reference food by exact name.
+:::
+
+### Hunter: mend pet panic button (level 12)
+
+```
+/cast [@pet] Mend Pet
+```
+
+A dying pet is the hunter's main death scenario. This belongs on a comfortable key.
+
+### Hunter: dismount / drop Cheetah (level 20)
+
+```
+/cancelaura Aspect of the Cheetah
+/dismount
+```
+
+One press fixes the two situations that get a character dazed and killed: Cheetah left on in combat, and being stuck mounted at a quest giver.
+
+### Warrior: opener + combat sequence
+
+Two buttons work better than one:
+
+```
+/cast Charge
+```
+
+```
+/castsequence reset=target/6 Rend, Thunder Clap, Heroic Strike
+```
+
+Charge only works out of combat at range; embedding it in a sequence bricks the button mid-fight exactly when it is needed. Separate buttons cannot jam.
+
+## When Not to Macro
+
+- **Damage spells stay separate.** A "Ranged Combo" macro of Serpent Sting + Arcane Shot + Auto Shot casts only the Sting every press — Sting refreshes on an already-stung target, so the later lines never fire. And Auto Shot is a toggle that starts on its own; it needs no button.
+- **Cooldown decisions are for fingers.** Thunder Clap is a per-fight decision (hard mob or two mobs), not a rotation piece. A spam button cannot make that decision.
+- **DoTs resist spam.** Refreshing Rend before it expires overwrites the debuff and discards the remaining ticks. No macro can judge "fallen off and the target will live nine more seconds."
+
+## Sources
+
+- Owner-supplied `WoW_Forever_Newbie_Tips.docx` (Q&A session) — macro questions and worked answers, including the fishing-pole failure case.
+
+Last reviewed: **2026-11-08**.
