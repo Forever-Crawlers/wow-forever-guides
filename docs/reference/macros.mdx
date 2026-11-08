@@ -32,16 +32,20 @@ If a macro does nothing, the first line usually failed and the rest still ran. C
 `/castsequence` steps through a list of spells, one entry per press, advancing only when a spell actually casts.
 
 ```
-/castsequence reset=target/6 Charge, Rend, Thunder Clap, Heroic Strike
+/castsequence reset=target/6 Rend, Thunder Clap, Heroic Strike
 ```
 
-- Press 1 casts Charge, press 2 casts Rend, and so on through the list.
+- Press 1 casts Rend, press 2 casts Thunder Clap, and so on through the list.
 - After the last entry, the sequence **loops back to the first** — castsequence is a circle, not a line.
 - **Reset conditions** (`reset=target/6`) restart the sequence early:
   - `target` — switching to a different enemy.
   - `6` — six seconds pass without pressing the button.
   - `combat` — combat ends.
 - If the current step cannot cast (out of Rage, on cooldown), the button does nothing and **waits on that step** — castsequence never skips.
+
+:::warning A time reset can land the sequence on an uncastable step
+The `6`-second timer counts inactivity from the last press. When it expires, the sequence silently returns to its first entry. If that entry is a spell that only works out of combat — **Charge** — the next press tries it in combat, fails, and the button jams on the dead step until combat ends. This is the classic “Charge fired once, then the macro died” failure. Keep Charge out of castsequences entirely; use the `[nocombat]` condition split instead (see the Warrior example below).
+:::
 
 :::warning Cooldowns jam castsequence
 A step on cooldown stalls the button every cycle. Spells with their own timers (Thunder Clap, Mortal Strike, Sweeping Strikes) belong on their own keys, not inside a spam sequence.
@@ -101,6 +105,21 @@ Two buttons work better than one:
 ```
 
 Charge only works out of combat at range; embedding it in a sequence bricks the button mid-fight exactly when it is needed. Separate buttons cannot jam.
+
+### Warrior: one-button opener (condition split)
+
+To keep the pull on a single key without the jam:
+
+```
+#showtooltip
+/cast [nocombat] Charge
+/castsequence reset=target Rend, Rend
+/startattack
+```
+
+Out of combat, the first line casts Charge and the spell line below is skipped for that press. In combat, the `[nocombat]` condition fails instantly and the sequence steps — press once for Rend, again to refresh, then it loops. A new target restarts at Rend. There is no time reset on this button, so it cannot silently rewind to a step that fails; conditions fall through instead of jamming. `/startattack` keeps the swing timer running on every press.
+
+Tradeoff: press 2 refreshes Rend while the first Rend still ticks, clipping its remaining damage. Skip the second press on short-lived targets.
 
 ## When Not to Macro
 
