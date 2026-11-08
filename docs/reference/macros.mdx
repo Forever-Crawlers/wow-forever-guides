@@ -121,6 +121,28 @@ Out of combat, the first line casts Charge and the spell line below is skipped f
 
 Tradeoff: press 2 refreshes Rend while the first Rend still ticks, clipping its remaining damage. Skip the second press on short-lived targets.
 
+### Warrior: Thunder Clap on a modifier
+
+Thunder Clap carries a 6-second cooldown in Forever. Inside a castsequence, a cooldown step jams the button for the whole cooldown — every press hits the unready step and the rest of the sequence is unreachable. Modifiers route around this:
+
+```
+#showtooltip
+/cast [mod:shift] Thunder Clap
+/castsequence reset=target Rend, Heroic Strike
+```
+
+Default press steps the sequence; Shift-press casts Thunder Clap the moment it is ready. A Shift-press during the cooldown fails line one and falls through to the sequence, consuming a step — a small, acceptable cost.
+
+Heroic Strike itself stays off the main button: it is a 15-Rage dump, and binding it to every press starves Rend. Note that Heroic Strike is a next-swing replacement and sits off the global cooldown, so it *can* ride along with a GCD spell in one press:
+
+```
+#showtooltip
+/cast Thunder Clap
+/cast Heroic Strike
+```
+
+One press casts Thunder Clap and queues Heroic Strike together. Use as a burst key when Rage is high; spamming it buys an empty Rage bar.
+
 ## When Not to Macro
 
 - **Damage spells stay separate.** A "Ranged Combo" macro of Serpent Sting + Arcane Shot + Auto Shot casts only the Sting every press — Sting refreshes on an already-stung target, so the later lines never fire. And Auto Shot is a toggle that starts on its own; it needs no button.
